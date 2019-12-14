@@ -1,16 +1,20 @@
 from flask import Flask
 from flask_login import LoginManager 
 from flask_sqlalchemy import SQLAlchemy
+from flask_socketio import SocketIO, emit
 
 db = SQLAlchemy()
+socketio = SocketIO()
 
 def create_app():
     app = Flask(__name__)
-
-    app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
+    app.config['SECRET_KEY'] = 'fok'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
+    socketio.init_app(app, async_mode='threading')
+
     db.init_app(app)
+    
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -29,3 +33,4 @@ def create_app():
     app.register_blueprint(main_blueprint)
 
     return app
+
