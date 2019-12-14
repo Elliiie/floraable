@@ -1,2 +1,3 @@
 # floraable
-Plant controlling and monitoring system for busy people :)))
+Plant controlling and monitoring system for busy people :)
+
