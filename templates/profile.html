@@ -45,11 +45,9 @@
       <a href="/profile/add_device" class="btn btn-block btn-lg btn-default" role="button">Add device</a>
     </header>
     <article>
-    {% for device in current_user.devices %}
+    {% for d in devices %}
       <h2>
-        {% if current_user.devices[device] %}
-          {{ current_user.devices[device].name }} 
-        {% endif %}
+          {{ d.name }} 
       </h2>
     {% endfor %}
   <!-- {% for pin in pins %}

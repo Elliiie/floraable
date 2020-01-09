@@ -2,19 +2,31 @@ from flask import Flask
 from flask_login import LoginManager 
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, emit
+from flask_admin import Admin, BaseView, expose
+from flask_admin.contrib.sqla import ModelView
 
 db = SQLAlchemy()
 socketio = SocketIO()
 
+class MyView(BaseView):
+    @expose('/')
+    def index(self):
+        return self.render('admin.html')
+
 def create_app():
     app = Flask(__name__)
+    db.init_app(app)
     app.config['SECRET_KEY'] = 'fok'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
-    socketio.init_app(app, async_mode='threading')
+    admin = Admin(app)
+    admin.add_view(MyView(name='Hello'))
+    from .models import User
+    admin.add_view(ModelView(User, db.session))
+    from .models import Device
+    admin.add_view(ModelView(Device, db.session))
 
-    db.init_app(app)
-    
+    socketio.init_app(app, async_mode='threading')
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

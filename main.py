@@ -1,17 +1,19 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from flask_login import login_required, current_user
-from .models import Device
+from .models import Device, User, UserDevice
 import paho.mqtt.client as mqtt
 from . import db
 from . import socketio
 
 main = Blueprint('main', __name__)
 
-
 @main.route("/profile")
 @login_required
 def profile():
-    return render_template('profile.html',async_mode=socketio.async_mode, **templateData)
+    devices = Device.query.join(UserDevice).join(User).filter((UserDevice.c.user_id == current_user.id)).all()
+    #devices = Device.query.join(UserDevice).join(User).filter_by(user_id=current_user.id).all()
+    #devices = Device.query.all()
+    return render_template('profile.html', devices = devices, async_mode=socketio.async_mode , **templateData)
 
 @main.route("/profile/add_device", methods=['GET','POST'])
 @login_required
@@ -22,7 +24,8 @@ def addDevice():
 
         db.create_all()
         new_device = Device(name=name, serialNum = serialNum)
-        current_user.devices.append(new_device)                
+        current_user.device.append(new_device)
+        #new_device.user.append(current_user)
         db.session.commit()
         
         return redirect(url_for('main.profile'))

@@ -4,21 +4,22 @@ from . import db
 from sqlalchemy.orm import relationship
 
 
-relationship_table=db.Table('relationship_table', 
-                             db.Column('user_id', db.Integer,db.ForeignKey('user.id'), nullable=False),
-                             db.Column('device_id',db.Integer,db.ForeignKey('device.id'),nullable=False),
-                             db.PrimaryKeyConstraint('user_id', 'device_id') )
+UserDevice=db.Table('UserDevice', 
+    db.Column('user_id', db.Integer,db.ForeignKey('user.id'), nullable=False),
+    db.Column('device_id',db.Integer,db.ForeignKey('device.id'),nullable=False),
+    db.PrimaryKeyConstraint('user_id', 'device_id') 
+    )
+    
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
-    devices=db.relationship('Device', secondary=relationship_table, backref='user', uselist=True)  
+    device = db.relationship('Device', secondary = UserDevice, backref = 'users')
 
     def is_authenticated(self):
         return True
-
 
     def is_active(self):
         return True
@@ -36,6 +37,7 @@ class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(1000))
     serialNum = db.Column(db.String(100))
+
 
 class TemperatureSensorValues(db.Model):
     id = db.Column(db.Integer, primary_key=True)
