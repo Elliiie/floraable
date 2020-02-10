@@ -37,19 +37,24 @@ class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(1000))
     serialNum = db.Column(db.String(100))
+    temp_value = db.relationship('TemperatureSensorValue', backref = 'device')
+    moisture_value = db.relationship('MoistureSensorValue', backref = 'device')
+    light_value = db.relationship('LightSensorValue', backref = 'device')
 
 
-class TemperatureSensorValues(db.Model):
+
+class TemperatureSensorValue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    deviceId = db.Column(db.Integer, db.ForeignKey('device.id'), nullable=False)
     value = db.Column(db.Float)
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
 
-class MoistureSensorValues(db.Model):
+class MoistureSensorValue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    deviceId = db.Column(db.Integer, db.ForeignKey('device.id'), nullable=False)
     value = db.Column(db.Float)
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
 
-class LightSensorValues(db.Model):
+
+class LightSensorValue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    deviceId = db.Column(db.Integer, db.ForeignKey('device.id'), nullable=False)
     value = db.Column(db.Float)
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
