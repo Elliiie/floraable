@@ -2,4 +2,5 @@
   (lib (name ESP32-DEVKITC-32D)(type Legacy)(uri "D:/folder 0/download/KiCad/lib/ESP32-DEVKITC-32D.lib")(options "")(descr ""))
   (lib (name bh1750)(type Legacy)(uri "D:/folder 0/download/KiCad/lib/bh1750.lib")(options "")(descr ""))
   (lib (name Regulator_Linear)(type Legacy)(uri "D:/folder 0/download/KiCad/lib/Regulator_Linear.lib")(options "")(descr ""))
+  (lib (name floraable-cache)(type Legacy)(uri ${KIPRJMOD}/floraable-cache.lib)(options "")(descr ""))
 )

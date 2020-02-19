@@ -10,6 +10,10 @@ from keystoneclient import session as ksc_session
 main = Blueprint('main', __name__)
 mqttc = mqtt.Client()
 
+@main.route("/")
+def index():
+    return render_template('index.html')
+    
 @main.route("/profile")
 @login_required
 def profile():
@@ -20,23 +24,41 @@ def profile():
 @login_required
 def addDevice():
     if request.method == 'POST':
+
         name = request.form.get('name')
         serialNum = request.form.get('serialNum')
 
-        db.create_all()
-        new_device = Device(name=name, serialNum = serialNum)
-        current_user.device.append(new_device)
-        db.session.commit()
+        device = Device.query.filter_by(serialNum = serialNum).first()
+
+        if device:
+            db.create_all()
+            current_user.device.append(device)
+            db.session.commit()
         
+        else:
+            db.create_all()
+            new_device = Device(name=name, serialNum = serialNum)
+            current_user.device.append(new_device)
+            db.session.commit()
+            
         return redirect(url_for('main.profile'))
 
     else:
         return render_template('deviceAdder.html')
 
-@main.route("/")
-def index():
-    return render_template('index.html')
 
+@main.route("/profile/<string:device>/<board>/delete")
+def deleteDevice(device, board):
+    if request.method == 'POST':
+
+        serialNum = device
+
+        Device.delete().where(Device.c.serialNum==serialNum)                               
+
+        return redirect(url_for('main.profile'))
+
+    else:
+        return redirect(url_for('main.profile'))
 
 @main.route("/profile/<string:device>/<board>")
 def deSomething(device, board):
@@ -59,7 +81,7 @@ def deSomething(device, board):
         print("Connected with result code "+str(rc))
         print("zdr")
         client.subscribe("/profile/<device>/esp8266/temperature")
-        client.subscribe("/profile/<device>/esp8266/humidity")
+        client.subscribe("/profile/<device>/esp8266/soilmoisture")
         client.subscribe("/profile/<device>/esp8266/light")
 
 
@@ -72,14 +94,16 @@ def deSomething(device, board):
             socketio.emit('dht_temperature', {'data' : message.payload})
 
 
-        if message.topic == "/profile/<device>/esp8266/moisture":
-            print("humidity update")
-            socketio.emit('dht_humidity', {'data' : message.payload})
+        if message.topic == "/profile/<device>/esp8266/soilmoisture":
+            print("soil moisture update")
+
+            socketio.emit('soil_moisture', {'data' : message.payload})
 
         if message.topic == "/profile/<device>/esp8266/light":
             print("light update")
 
             socketio.emit('light_sensor', {'data' : message.payload})
+
     return render_template('device.html',device = device, async_mode=socketio.async_mode, **templateData)
 
     mqttc.on_connect = on_connect

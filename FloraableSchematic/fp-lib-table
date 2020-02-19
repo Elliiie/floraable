@@ -3,4 +3,5 @@
   (lib (name TEM-HUM-AM2302_4P-25.0X15.0MM_)(type Legacy)(uri "D:/folder 0/download/KiCad/lib/TEM-HUM-AM2302_4P-25.0X15.0MM_.mod")(options "")(descr ""))
   (lib (name ESP12E_DEVKIT)(type Eagle)(uri "D:/folder 0/download/KiCad/lib/nodemcu-devkit-v1.0-master/ESP12E_DEVKIT.lbr")(options "")(descr ""))
   (lib (name connectors)(type KiCad)(uri "D:/folder 0/download/KiCad/lib/connectors")(options "")(descr ""))
+  (lib (name floraable)(type KiCad)(uri ${KIPRJMOD}/floraable.pretty)(options "")(descr ""))
 )

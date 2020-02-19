@@ -1,3 +1,4 @@
+
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <Wire.h>
@@ -31,6 +32,8 @@ int inputVal  = 0;
 
 DHT dht(DHTPin, DHTTYPE);
 
+const int pump = 16;
+
 long now = millis();
 long lastMeasure = 0;
 
@@ -42,7 +45,7 @@ void setup_wifi() {
   Serial.println(ssid);
 
   WiFi.begin(ssid, password);
-
+  
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -70,7 +73,7 @@ void callback(String topic, byte* message, unsigned int length) {
   }
   Serial.println();
 
-  if(topic==("%s/esp8266/4", String(ESP.getChipId()))){
+  if(topic==("/profile/003F0902/esp8266/4")){
       Serial.print("Changing GPIO 4 to ");
       if(messageTemp == "1"){
         digitalWrite(ledGPIO4, HIGH);
@@ -81,7 +84,7 @@ void callback(String topic, byte* message, unsigned int length) {
         Serial.print("Off");
       }
   }
-  if(topic==("%s/esp8266/5", String(ESP.getChipId()))){
+  if(topic==("/profile/003F0902/esp8266/5")){
       Serial.print("Changing GPIO 5 to ");
       if(messageTemp == "1"){
         digitalWrite(ledGPIO5, HIGH);
@@ -100,8 +103,8 @@ void reconnect() {
     Serial.print("Attempting MQTT connection...");
     if (client.connect("ESP8266Client")) {
       Serial.println("connected");  
-      String topic1 = ("%s/esp8266/4", String(ESP.getChipId()));
-      String topic2 = ("%s/esp8266/5", String(ESP.getChipId()));
+      String topic1 = ("/profile/003F0902/esp8266/4");
+      String topic2 = ("/profile/003F0902/esp8266/5");
       
       client.subscribe(topic1.c_str());
       client.subscribe(topic2.c_str());
@@ -134,8 +137,6 @@ void loop() {
     Serial.print("opaaa");
     client.connect("ESP8266Client");
   }
-  //read_light_sensor();
- // delay(60000);
   
   now = millis();
   if (now - lastMeasure > 10000) {
@@ -158,11 +159,14 @@ void loop() {
     static char humidityTemp[7];
     dtostrf(h, 6, 2, humidityTemp);
 
-    String topicTemperature = ("%s/esp8266/temperature", String(ESP.getChipId()));
+    String topicTemperature = ("/profile/003F0902/esp8266/temperature");
     client.publish(topicTemperature.c_str(), temperatureTemp);  
 
-    String topicHumidity = ("%s/esp8266/humidity", String(ESP.getChipId()));
+    String topicHumidity = ("/profile/003F0902/esp8266/humidity");
     client.publish(topicHumidity.c_str(), temperatureTemp);  
+
+      digitalWrite(pump, HIGH);
+
     
     Serial.print("Humidity: ");
     Serial.print(h);
@@ -176,6 +180,9 @@ void loop() {
 
     uint16_t lux = lightMeter.GetLightIntensity();
     inputVal = analogRead (analog); 
+    String topicLight = ("/profile/003F0902/esp8266/light");
+    client.publish(topicHumidity.c_str(), temperatureTemp);  
+    
     Serial.println("Soil moisture: ");
     Serial.println(inputVal);
     Serial.println("------");
@@ -183,6 +190,5 @@ void loop() {
     Serial.println (lux);
     delay(2000);
     
-    delay(1000);
     }
 }

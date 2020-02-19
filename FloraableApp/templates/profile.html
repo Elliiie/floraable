@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <title>test</title>
+    <title>Floraable</title>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
       <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -22,27 +22,9 @@
     <article>
     {% for d in devices %}
       <h2>
-        <a href="/profile/{{d.serialNum}}/esp8266" class="btn btn-block btn-lg btn-default" role="button">{{ d.name }}</a> 
+        <a href="/profile/{{d.serialNum}}/esp8266" class="btn btn-block btn-lg btn-default" role="button">{{ d.name }}</a>
       </h2>
     {% endfor %}
-  <!-- {% for pin in pins %}
-    <h2>{{pins[pin].name}}
-    {% if pins[pin].state == 'True' %}
-        is currently <strong>on</strong></h2>
-    <div class="row">
-        <a href="/profile/esp8266/{{pin}}/0" class="btn btn-block btn-lg btn-default" role="button">Turn off</a></div></div>
-    {% else %}
-            is currently <strong>off</strong></h2><div class="row"><div class="col-md-2">
-            <a href="/profile/esp8266/{{pin}}/1" class="btn btn-block btn-lg btn-primary" role="button">Turn on</a></div></div>
-    </div>
-    {% endif %}
-    {% endfor %}
-    <p>
-      <h3>DHT Readings (updated <span id = "readingsUpdated"></span>)</h3>
-      <h3>Temperature: <span id="temperature"></span>C</h3>
-      <h3>Humidity: <span id="humidity"></span>%</h3>
-    </p>
-  -->
   </article>
 
   {% endblock %}

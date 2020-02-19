@@ -1,4 +1,4 @@
-18057162538221612
+18061908118842053
 BH1750FVI-TR
 XDCR_BH1750FVI-TR
 
@@ -80212,3 +80212,24 @@ connector Molex SlimStack side entry
 0
 80
 80
+floraable
+BH1750_module
+
+
+0
+5
+5
+floraable
+newNodeMCU
+ESP12E_DEVKIT
+
+0
+30
+30
+floraable
+nodeMCU
+ESP12E_DEVKIT
+
+0
+30
+30
