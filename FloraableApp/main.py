@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from flask_login import login_required, current_user
-from .models import Device, User, UserDevice, TemperatureSensorValue, MoistureSensorValue, LightSensorValue
+from .models import Device, User, UserDevice, TemperatureSensorValue, HumiditySensorValue, MoistureSensorValue, LightSensorValue
 import paho.mqtt.client as mqtt
 from . import db
 from . import socketio
@@ -66,7 +66,7 @@ def on_connect(client, userdata, flags, rc):
         print("zdr")
         client.subscribe("/profile/4131074/esp8266/temperature")
         client.subscribe("/profile/4131074/esp8266/humidity")
-        client.subscribe("/profile/4131074/esp8266/soilmoisture")
+        client.subscribe("/profile/4131074/esp8266/soilMoisture")
         client.subscribe("/profile/4131074/esp8266/light")
 
 def on_message(client, userdata, message):
@@ -75,24 +75,31 @@ def on_message(client, userdata, message):
 
     if message.topic == "/profile/4131074/esp8266/temperature":
         print("temperature update")
-
         socketio.emit('dht_temperature', {'data' : message.payload})
-
+        new_temp_value = TemperatureSensorValue(value=message.payload, device_id=4131074)
+        db.session.add(new_temp_value)
+        db.session.commit()
 
     if message.topic == "/profile/4131074/esp8266/humidity":
         print("humidity update")
-
         socketio.emit('dht_humidity', {'data' : message.payload})
+        new_humidity_value = HumiditySensorValue(value=message.payload, device_id=4131074)
+        db.session.add(new_humidity_value)
+        db.session.commit()
         
-    if message.topic == "/profile/4131074/esp8266/soilmoisture":
+    if message.topic == "/profile/4131074/esp8266/soilMoisture":
         print("soil moisture update")
-
-        socketio.emit('soil_moisture', {'data' : message.payload})
+        socketio.emit('soilMoisture_sensor', {'data' : message.payload})
+        new_moisture_value = MoistureSensorValue(value=message.payload, device_id=4131074)
+        db.session.add(new_moisture_value)
+        db.session.commit()
 
     if message.topic == "/profile/4131074/esp8266/light":
         print("light update")
-
         socketio.emit('light_sensor', {'data' : message.payload})
+        new_light_value = LightSensorValue(value=message.payload, device_id=4131074)
+        db.session.add(new_light_value)
+        db.session.commit()
         
 mqttc.on_connect = on_connect
 mqttc.on_message = on_message
@@ -117,6 +124,7 @@ def getDevice(device, board):
 def action(board, device, changePin, action):
     changePin = int(changePin)
     devicePin = pins[changePin]['name']
+
     device = Device.query.filter_by(serialNum=device).one()
 
     if action == "1" and board == 'esp8266':

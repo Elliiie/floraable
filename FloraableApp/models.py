@@ -38,12 +38,17 @@ class Device(db.Model):
     name = db.Column(db.String(1000))
     serialNum = db.Column(db.String(100))
     temp_value = db.relationship('TemperatureSensorValue', backref = 'device')
+    humid_value = db.relationship('HumiditySensorValue', backref = 'device')
     moisture_value = db.relationship('MoistureSensorValue', backref = 'device')
     light_value = db.relationship('LightSensorValue', backref = 'device')
 
 
-
 class TemperatureSensorValue(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    value = db.Column(db.Float)
+    device_id = db.Column(db.Integer, db.ForeignKey('device.id'))
+
+class HumiditySensorValue(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Float)
     device_id = db.Column(db.Integer, db.ForeignKey('device.id'))

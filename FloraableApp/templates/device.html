@@ -28,8 +28,10 @@
             $('#temperature').text(ab2str(msg.data)).html();
       	});
         socket.on('light_sensor', function(msg){
-            $('#light').text(ab2str(msg.data)).html();
-            
+            $('#light').text(ab2str(msg.data)).html(); 
+        });
+        socket.on('soilMoisture_sensor', function(msg){
+            $('#soilMoisture').text(ab2str(msg.data)).html();
         });
       });
     </script>
@@ -64,6 +66,7 @@
         <li>Temperature: <span id="temperature"></span>C</li>
         <li>Humidity: <span id="humidity"></span>%</li>
         <li>Light: <span id="light"></span>%</li>
+        <li>Soil Moisture: <span id="soilMoisture"></span>%</li>
       </p>
     </ul> 
   </article>

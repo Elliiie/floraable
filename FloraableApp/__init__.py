@@ -25,6 +25,14 @@ def create_app():
     admin.add_view(ModelView(User, db.session))
     from .models import Device
     admin.add_view(ModelView(Device, db.session))
+    from .models import TemperatureSensorValue
+    admin.add_view(ModelView(TemperatureSensorValue, db.session))
+    from .models import HumiditySensorValue
+    admin.add_view(ModelView(HumiditySensorValue, db.session))
+    from .models import MoistureSensorValue
+    admin.add_view(ModelView(MoistureSensorValue, db.session))
+    from .models import LightSensorValue
+    admin.add_view(ModelView(LightSensorValue, db.session))
 
     socketio.init_app(app, async_mode='threading')
 
