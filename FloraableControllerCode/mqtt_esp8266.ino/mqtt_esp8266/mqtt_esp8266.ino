@@ -15,8 +15,9 @@ BH1750FVI::eDeviceMode_t DEVICEMODE = BH1750FVI::k_DevModeContHighRes;
 
 BH1750FVI lightMeter(ADDRESSPIN, DEVICEADDRESS, DEVICEMODE);
 
+
 const char* ssid = "Venci-SetSERVICE";
-const char* password = "20061017";
+const char* password ="20061017";
 const char* mqtt_server = "192.168.0.106";
 
 WiFiClient espClient;
@@ -37,6 +38,10 @@ int inputVal  = 0;
 
 //water pump
 const int pump = 13;
+
+int period = 60000;
+
+unsigned long time_now = 0;
 
 
 void setup_wifi() {
@@ -135,6 +140,72 @@ void setup() {
 }
  
 
+void send_tempreture(){
+  
+
+        lastMeasure = now;
+        
+        float h = dht.readHumidity();
+        float t = dht.readTemperature();
+        
+        float f = dht.readTemperature(true);
+    
+        if (isnan(h) || isnan(t) || isnan(f)) {
+          Serial.println("Failed to read from DHT sensor!");
+          return;
+        }
+    
+        float hic = dht.computeHeatIndex(t, h, false);
+        static char temperatureTemp[7];
+        dtostrf(hic, 6, 2, temperatureTemp);
+        
+        static char humidityTemp[7];
+        dtostrf(h, 6, 2, humidityTemp);
+    
+        String topicTemperature = ("/profile/4131074/esp8266/temperature");
+        client.publish(topicTemperature.c_str(), temperatureTemp);  
+    
+        String topicHumidity = ("/profile/4131074/esp8266/humidity");
+        client.publish(topicHumidity.c_str(), humidityTemp);  
+    
+        
+        Serial.print("Humidity: ");
+        Serial.print(h);
+        Serial.print(" %\t Temperature: ");
+        Serial.print(t);
+        Serial.print(" *C ");
+        Serial.print(f);
+        Serial.print(" *F\t Heat index: ");
+        Serial.print(hic);
+        Serial.println(" *C ");
+    
+}
+
+void send_moisture(){
+ 
+      inputVal = analogRead (analog); 
+      Serial.println("Soil moisture: ");
+      Serial.println(inputVal);
+      static char soilmoisture[7];
+      dtostrf(inputVal, 6, 2, soilmoisture);
+      String topicMoisture = ("/profile/4131074/esp8266/soilMoisture");
+      client.publish(topicMoisture.c_str(), soilmoisture);  
+  
+}
+
+void send_light(){
+
+
+        uint16_t lux = lightMeter.GetLightIntensity();
+        static char lightLux[7];
+        dtostrf(lux, 6, 2, lightLux);
+        String topicLight = ("/profile/4131074/esp8266/light");
+        client.publish(topicLight.c_str(), lightLux);  
+        Serial.println("Light level: ");
+        Serial.println (lux);
+   
+}
+
 void loop() {
   if (!client.connected()) {
     reconnect();
@@ -144,63 +215,14 @@ void loop() {
     client.connect("ESP8266Client");
   }
   
-  now = millis();
-  if (now - lastMeasure > 10000) {
-    lastMeasure = now;
-    
-    float h = dht.readHumidity();
-    float t = dht.readTemperature();
-    
-    float f = dht.readTemperature(true);
+    send_tempreture();
+    send_moisture();
+    send_light();
 
-    if (isnan(h) || isnan(t) || isnan(f)) {
-      Serial.println("Failed to read from DHT sensor!");
-      return;
-    }
-
-    float hic = dht.computeHeatIndex(t, h, false);
-    static char temperatureTemp[7];
-    dtostrf(hic, 6, 2, temperatureTemp);
+    delay(60000);
+      
+    //Serial.println("id: ");
+    //Serial.println(ESP.getChipId());
+    //delay(2000);
     
-    static char humidityTemp[7];
-    dtostrf(h, 6, 2, humidityTemp);
-
-    String topicTemperature = ("/profile/4131074/esp8266/temperature");
-    client.publish(topicTemperature.c_str(), temperatureTemp);  
-
-    String topicHumidity = ("/profile/4131074/esp8266/humidity");
-    client.publish(topicHumidity.c_str(), temperatureTemp);  
-
-    
-    Serial.print("Humidity: ");
-    Serial.print(h);
-    Serial.print(" %\t Temperature: ");
-    Serial.print(t);
-    Serial.print(" *C ");
-    Serial.print(f);
-    Serial.print(" *F\t Heat index: ");
-    Serial.print(hic);
-    Serial.println(" *C ");
-
-    uint16_t lux = lightMeter.GetLightIntensity();
-    static char lightLux[7];
-    dtostrf(lux, 6, 2, lightLux);
-    
-    inputVal = analogRead (analog); 
-    String topicLight = ("/profile/4131074/esp8266/light");
-    client.publish(topicLight.c_str(), lightLux);  
-    
-    Serial.println("Soil moisture: ");
-    Serial.println(inputVal);
-    
-    Serial.println("------");
-    
-    Serial.println("Light level: ");
-    Serial.println (lux);
-
-    Serial.println("id: ");
-    Serial.println(ESP.getChipId());
-    delay(2000);
-    
-    }
 }
