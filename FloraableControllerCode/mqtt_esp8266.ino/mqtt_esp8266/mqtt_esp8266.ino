@@ -2,9 +2,9 @@
 #include <PubSubClient.h>
 #include <Wire.h>
 #include <BH1750FVI.h>
-#include "DHT.h"
+#include "DHTesp.h"
 
-#define DHTTYPE DHT22
+DHTesp dht;
 
 //003F0902
 //4131074
@@ -16,9 +16,9 @@ BH1750FVI::eDeviceMode_t DEVICEMODE = BH1750FVI::k_DevModeContHighRes;
 BH1750FVI lightMeter(ADDRESSPIN, DEVICEADDRESS, DEVICEMODE);
 
 
-const char* ssid = "Venci-SetSERVICE";
-const char* password ="20061017";
-const char* mqtt_server = "192.168.0.106";
+const char* ssid = "UAU";
+const char* password ="qkakaka69";
+const char* mqtt_server = "192.168.43.34";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -27,8 +27,6 @@ PubSubClient client(espClient);
 const int ledGPIO5 = 12;
 
 //dht 
-const int DHTPin = 14;
-DHT dht(DHTPin, DHTTYPE); 
 long now = millis();
 long lastMeasure = 0;
 
@@ -135,8 +133,8 @@ void setup() {
   
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
-  
-  dht.begin();
+
+  dht.setup(15, DHTesp::DHT22); // Connect DHT sensor to GPIO 17
 }
  
 
@@ -145,12 +143,10 @@ void send_tempreture(){
 
         lastMeasure = now;
         
-        float h = dht.readHumidity();
-        float t = dht.readTemperature();
-        
-        float f = dht.readTemperature(true);
-    
-        if (isnan(h) || isnan(t) || isnan(f)) {
+        float h = dht.getHumidity();
+        float t = dht.getTemperature();
+            
+        if (isnan(h) || isnan(t)) {
           Serial.println("Failed to read from DHT sensor!");
           return;
         }
@@ -174,8 +170,6 @@ void send_tempreture(){
         Serial.print(" %\t Temperature: ");
         Serial.print(t);
         Serial.print(" *C ");
-        Serial.print(f);
-        Serial.print(" *F\t Heat index: ");
         Serial.print(hic);
         Serial.println(" *C ");
     
