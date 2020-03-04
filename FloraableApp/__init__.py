@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, emit
 from flask_admin import Admin, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 socketio = SocketIO()
@@ -16,6 +17,7 @@ class MyView(BaseView):
 def create_app():
     app = Flask(__name__)
     db.init_app(app)
+    migrate = Migrate(app, db)
     app.config['SECRET_KEY'] = 'fok'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
@@ -33,6 +35,8 @@ def create_app():
     admin.add_view(ModelView(MoistureSensorValue, db.session))
     from .models import LightSensorValue
     admin.add_view(ModelView(LightSensorValue, db.session))
+    from .models import Plant
+    admin.add_view(ModelView(Plant, db.session))
 
     socketio.init_app(app, async_mode='threading')
 

@@ -35,6 +35,20 @@
         });
       });
     </script>
+    <style>
+      .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 40%;
+        border-radius: 5px;
+        background-color: #4d4d4d;
+      }
+
+      .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      }
+
+    </style>
 </head>
 <body>
     {% extends "base.html" %}
@@ -44,30 +58,41 @@
         Hello, this is {{ device.name }}'s page!
       </center>
     </header>
+      <h2><b>You want to turn on the autopilot system?</b></h2>
+      <form method="POST" action="/profile/4131074/esp8266">
+        <input type="checkbox" value="True" name="autopilot"/>
+        <label for="autopilot"> Yeah</label>
+        <input type="checkbox" value="False" name="by myself"/>
+        <label for="by myself"> Naah</label><br>
+        <input type="submit" value="Confirm" class="btn btn-lg btn-default">
+      </form>
+      <br><br>
     <article>
     <ul>
       {% for pin in pins %}
       {{pins[pin].name}}
-      <h1>
       {% if pins[pin].state == 'True' %}
-          is currently <strong>on</strong></h1>
+          is currently <strong>on</strong>
       <li>
-          <a href="/profile/{{device.serialNum}}/esp8266/{{pin}}/0" class="btn btn-block btn-lg btn-default" role="button">
+          <a href="/profile/{{device.serialNum}}/esp8266/{{pin}}/0" class="btn btn-lg btn-default" role="button" style="color: #4d4d4d">
             Turn off</a></li>
       {% else %}
               is currently <strong>off</strong></h2><li>
-              <a href="/profile/{{device.serialNum}}/esp8266/{{pin}}/1" class="btn btn-block btn-lg btn-primary" role="button">
+              <a href="/profile/{{device.serialNum}}/esp8266/{{pin}}/1" class="btn btn-lg btn-default" role="button" style="color: #4d4d4d">
                 Turn on</a></li>
               </li>
       {% endif %}
       {% endfor %}
-      <p>
-        <li>Last Readings (updated <span id = "readingsUpdated"></span>)</li>
-        <li>Temperature: <span id="temperature"></span>C</li>
-        <li>Humidity: <span id="humidity"></span>%</li>
-        <li>Light: <span id="light"></span>%</li>
-        <li>Soil Moisture: <span id="soilMoisture"></span>%</li>
-      </p>
+      <br><br>
+      <center>
+      <div class="card">
+          <li>Last Readings (updated <span id = "readingsUpdated"></span>)</li>
+          <li>Temperature: <span id="temperatu2re"></span>C</li>
+          <li>Humidity: <span id="humidity"></span>%</li>
+          <li>Light: <span id="light"></span>%</li>
+          <li>Soil Moisture: <span id="soilMoisture"></span>%</li>
+      </div>
+      </center>
     </ul> 
   </article>
 

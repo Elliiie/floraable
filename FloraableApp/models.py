@@ -37,11 +37,20 @@ class Device(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(1000))
     serialNum = db.Column(db.String(100))
+    plantType = db.Column(db.String(100))
+    autopilot = db.Column(db.Boolean, default=True)
     temp_value = db.relationship('TemperatureSensorValue', backref = 'device')
     humid_value = db.relationship('HumiditySensorValue', backref = 'device')
     moisture_value = db.relationship('MoistureSensorValue', backref = 'device')
     light_value = db.relationship('LightSensorValue', backref = 'device')
 
+class Plant(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    temp_value = db.Column(db.Float)
+    humid_value = db.Column(db.Float)
+    moisture_value = db.Column(db.Float)
+    light_value = db.Column(db.Float)
 
 class TemperatureSensorValue(db.Model):
     id = db.Column(db.Integer, primary_key=True)

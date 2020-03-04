@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from flask_login import login_required, current_user
-from .models import Device, User, UserDevice, TemperatureSensorValue, HumiditySensorValue, MoistureSensorValue, LightSensorValue
+from .models import Device, User, UserDevice, TemperatureSensorValue, HumiditySensorValue, MoistureSensorValue, LightSensorValue, Plant
 import paho.mqtt.client as mqtt
 from . import db
 from . import socketio
@@ -15,7 +15,7 @@ def index():
     return render_template('index.html')
     
 @main.route("/profile")
-@login_required
+@login_required         
 def profile():
     devices = Device.query.join(UserDevice).join(User).filter((UserDevice.c.user_id == current_user.id)).all()
     return render_template('profile.html',  devices = devices,  async_mode=socketio.async_mode)
@@ -27,17 +27,21 @@ def addDevice():
 
         name = request.form.get('name')
         serialNum = request.form.get('serialNum')
+        plantType = request.form.get('plantType')
 
+        db.create_all()
         device = Device.query.filter_by(serialNum = serialNum).first()
 
+        devices = Device.query.join(UserDevice).join(User).filter((UserDevice.c.user_id == current_user.id)).all()
+        plants = Plant.query.all()
+        
         if device:
-            db.create_all()
+            
             current_user.device.append(device)
             db.session.commit()
         
         else:
-            db.create_all()
-            new_device = Device(name=name, serialNum = serialNum)
+            new_device = Device(name=name, serialNum=serialNum, plantType=plantType)
             current_user.device.append(new_device)
             db.session.commit()
             
@@ -63,7 +67,6 @@ def deleteDevice(device, board):
 
 def on_connect(client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
-        print("zdr")
         client.subscribe("/profile/4131074/esp8266/temperature")
         client.subscribe("/profile/4131074/esp8266/humidity")
         client.subscribe("/profile/4131074/esp8266/soilMoisture")
@@ -107,16 +110,51 @@ mqttc.connect("localhost", 1883, 60)
 mqttc.loop_start()
 
 pins = {
-    12 : {'name' : 'GPIO 12', 'board' : 'esp8266', 'topic' : 'profile/4131074/esp8266/12', 'state' : 'False'},
-    13 : {'name' : 'GPIO 15', 'board' : 'esp8266', 'topic' : 'profile/4131074/esp8266/13', 'state' : 'False'}
+    12 : {'name' : 'LED Strip', 'board' : 'esp8266', 'topic' : 'profile/4131074/esp8266/12', 'state' : 'False'},
+    13 : {'name' : 'Water pump', 'board' : 'esp8266', 'topic' : 'profile/4131074/esp8266/13', 'state' : 'False'}
 }
+
 templateData = {
     'pins' : pins
 }
 
-@main.route("/profile/<string:device>/<board>")
-def getDevice(device, board):
+@main.route("/profile/<string:device>/<board>", methods=['GET','POST'])
+def controllDevice(device, board):
+
     device = Device.query.filter_by(serialNum=device).one()
+    if request.method == 'POST':
+        
+        if request.form.get('autopilot'):
+
+            print("hi there")
+
+            plantType = device.plantType
+            print(plantType)
+
+            plant = Plant.query.filter_by(name=plantType).first()
+
+            moistureVal = MoistureSensorValue.query.filter_by(device_id=device.id).first()
+            print(moistureVal)
+            
+            if(moistureVal.value < plant.moisture_value):
+                mqttc.publish(pins[13]['topic'], "1")
+                pins[13]['state'] = 'True'
+
+            lightVal = LightSensorValue.query.filter_by(device_id=device.id).first()
+
+            if(lightVal.value < plant.light_value):
+                mqttc.publish(pins[12]['topic'], "1")
+                pins[12]['state'] = 'True'
+            
+        else:
+            device.autopilot = False
+            mqttc.publish(pins[13]['topic'], "0")
+            pins[13]['state'] = 'False'
+            mqttc.publish(pins[12]['topic'], "0")
+            pins[12]['state'] = 'False'
+
+        print(device.autopilot)
+
     return render_template('device.html',device = device, async_mode=socketio.async_mode, **templateData)
 
 
@@ -125,12 +163,15 @@ def action(board, device, changePin, action):
     changePin = int(changePin)
     devicePin = pins[changePin]['name']
 
-    device = Device.query.filter_by(serialNum=device).one()
+    device = Device.query.filter_by(serialNum=device).first()
+    plantType = device.plantType
+    print(plantType)
+
+    plant = Plant.query.filter_by(name=plantType).first()
 
     if action == "1" and board == 'esp8266':
         mqttc.publish(pins[changePin]['topic'], "1")
         pins[changePin]['state'] = 'True'
-        print("zdr ot leda")
 
     if action == "0" and board == 'esp8266':
         mqttc.publish(pins[changePin]['topic'], "0")
