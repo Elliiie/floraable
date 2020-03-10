@@ -2,6 +2,9 @@
 #include <PubSubClient.h>
 #include <Wire.h>
 #include <BH1750FVI.h>
+
+BH1750FVI lightMeter(BH1750FVI::k_DevModeContLowRes);
+
 #include "DHTesp.h"
 
 DHTesp dht;
@@ -9,16 +12,10 @@ DHTesp dht;
 //003F0902
 //4131074
 
-uint8_t ADDRESSPIN = 13;
-BH1750FVI::eDeviceAddress_t DEVICEADDRESS = BH1750FVI::k_DevAddress_H;
-BH1750FVI::eDeviceMode_t DEVICEMODE = BH1750FVI::k_DevModeContHighRes;
 
-BH1750FVI lightMeter(ADDRESSPIN, DEVICEADDRESS, DEVICEMODE);
-
-
-const char* ssid = "UAU";
-const char* password ="qkakaka69";
-const char* mqtt_server = "192.168.43.34";
+const char* ssid = "Venci-SetSERVICE";
+const char* password ="20061017";
+const char* mqtt_server = "192.168.0.106";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -62,7 +59,6 @@ void setup_wifi() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
-  lightMeter.begin();
   Serial.println(F("BH1750 Test"));
 }
 
@@ -79,7 +75,7 @@ void callback(String topic, byte* message, unsigned int length) {
   Serial.println();
 
   if(topic==("profile/4131074/esp8266/12")){
-      Serial.print("Changing GPIO 13 to ");
+      Serial.print("Changing GPIO 12 to ");
       if(messageTemp == "1"){
         digitalWrite(ledGPIO5, HIGH);
         Serial.print("On");
@@ -109,11 +105,8 @@ void reconnect() {
     if (client.connect("ESP8266Client")) {
       Serial.println("connected");  
       
-      String topic1 = ("profile/4131074/esp8266/12");
-      String topic2 = ("profile/4131074/esp8266/15");
-      
-      client.subscribe(topic1.c_str());
-      client.subscribe(topic2.c_str());
+      client.subscribe("profile/4131074/esp8266/12");
+      client.subscribe("profile/4131074/esp8266/13");
       
     } else {
       Serial.print("failed, rc=");
@@ -130,11 +123,12 @@ void setup() {
   
   Serial.begin(9600);
   setup_wifi();
-  
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
 
-  dht.setup(15, DHTesp::DHT22); // Connect DHT sensor to GPIO 17
+  Wire.begin(D1, D2);
+  lightMeter.begin();
+  dht.setup(D5, DHTesp::DHT22); // Connect DHT sensor to GPIO 17
 }
  
 
@@ -189,15 +183,13 @@ void send_moisture(){
 
 void send_light(){
 
-
-        uint16_t lux = lightMeter.GetLightIntensity();
-        static char lightLux[7];
-        dtostrf(lux, 6, 2, lightLux);
-        String topicLight = ("/profile/4131074/esp8266/light");
-        client.publish(topicLight.c_str(), lightLux);  
-        Serial.println("Light level: ");
-        Serial.println (lux);
-   
+      uint16_t lux = lightMeter.GetLightIntensity();
+      static char lightLux[7];
+      dtostrf(lux, 6, 2, lightLux);
+      String topicLight = ("/profile/4131074/esp8266/light");
+      client.publish(topicLight.c_str(), lightLux);  
+      Serial.println("Light level: ");
+      Serial.println (lux);  
 }
 
 void loop() {
@@ -212,7 +204,7 @@ void loop() {
     send_tempreture();
     send_moisture();
     send_light();
-
+    
     delay(60000);
       
     //Serial.println("id: ");
