@@ -20,15 +20,15 @@
       <center>
         Welcome, {{ current_user.name }}!
       </center>
-      <a href="/profile/add_device" class="btn btn-lg btn-default" role="button" style="color: #4d4d4d">Add device</a>
     </header>
     <article>
-      <h1><b>Your devices</b></h1><br><br>
+    <a href="/profile/add_device" class="btn btn-lg btn-default" role="button" style="color: #4d4d4d">Add device</a>
+    <br><br>
+      <h1 style="font-size: 200%;"><b>Your devices</b></h1><br><br>
     {% for d in devices %}
       <h2>
         <a href="/profile/{{d.serialNum}}/esp8266" class="btn btn-lg btn-default" role="button" style="color: #4d4d4d">{{ d.name }}</a>
       </h2>
-      <br>
     {% endfor %}
   </article>
 

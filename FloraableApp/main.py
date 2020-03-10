@@ -29,8 +29,7 @@ def addDevice():
         serialNum = request.form.get('serialNum')
         plantType = request.form.get('plantType')
 
-        db.create_all()
-        device = Device.query.filter_by(serialNum = serialNum).first()
+        device = Device.query.filter_by(serialNum=serialNum).first()
 
         devices = Device.query.join(UserDevice).join(User).filter((UserDevice.c.user_id == current_user.id)).all()
         plants = Plant.query.all()
@@ -65,6 +64,16 @@ def deleteDevice(device, board):
         return redirect(url_for('main.profile'))
 
 
+def createRecordsInSensorsTables(deviceId, value, table):
+        
+    device = Device.query.filter_by(serialNum = deviceId).one()
+    print(deviceId)
+
+    if table == "temperature":
+        new_temperature_value = TemperatureSensorValue(value=value, device_id=device)
+        new_temperature_value.append(device)
+
+
 def on_connect(client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
         client.subscribe("/profile/+/esp8266/temperature")
@@ -76,33 +85,41 @@ def on_message(client, userdata, message):
 
     print("Received message '" + str(message.payload) + "' on topic '" + message.topic + "' with QoS " + str(message.qos))
 
-    if message.topic == "/profile/+/esp8266/temperature":
+    messageElements = message.topic.split("/")
+    print(messageElements)
+
+    topic = messageElements[4]
+    deviceId = messageElements[2]
+
+    device = Device.query.filter_by(serialNum=deviceId).one()
+    print(device)
+
+    if topic == "temperature":
         print("temperature update")
         socketio.emit('dht_temperature', {'data' : message.payload})
-        new_temp_value = TemperatureSensorValue(value=message.payload, device_id=4131074)
-        db.session.add(new_temp_value)
-        db.session.commit()
+        new_temperature_value = TemperatureSensorValue(value=float(message.payload), device_id=device.id)
+        new_temperature_value.append(device)
 
-    if message.topic == "/profile/+/esp8266/humidity":
+    if topic == "humidity":
         print("humidity update")
         socketio.emit('dht_humidity', {'data' : message.payload})
-        new_humidity_value = HumiditySensorValue(value=message.payload, device_id=4131074)
-        db.session.add(new_humidity_value)
-        db.session.commit()
         
-    if message.topic == "/profile/+/esp8266/soilMoisture":
+        
+    if topic == "soilMoisture":
         print("soil moisture update")
         socketio.emit('soilMoisture_sensor', {'data' : message.payload})
-        new_moisture_value = MoistureSensorValue(value=message.payload, device_id=4131074)
+        new_moisture_value = MoistureSensorValue(value=float(message.payload), device_id=device.id)
         db.session.add(new_moisture_value)
         db.session.commit()
 
-    if message.topic == "/profile/+/esp8266/light":
+    if topic == "light":
         print("light update")
         socketio.emit('light_sensor', {'data' : message.payload})
-        new_light_value = LightSensorValue(value=message.payload, device_id=4131074)
+        new_light_value = LightSensorValue(value=float(message.payload), device_id=device.id)
         db.session.add(new_light_value)
         db.session.commit()
+
+        
         
 mqttc.on_connect = on_connect
 mqttc.on_message = on_message
@@ -110,18 +127,16 @@ mqttc.connect("localhost", 1883, 60)
 mqttc.loop_start()
 
 pins = {
-    12 : {'name' : 'LED Strip', 'board' : 'esp8266', 'topic' : 'profile/<string:device>/esp8266/12', 'state' : 'False'},
-    13 : {'name' : 'Water pump', 'board' : 'esp8266', 'topic' : 'profile/<string:device>/esp8266/13', 'state' : 'False'}
+    12 : {'name' : 'LED Strip', 'board' : 'esp8266', 'state' : 'False'},
+    13 : {'name' : 'Water pump', 'board' : 'esp8266', 'state' : 'False'}
 }
 templateData = {
     'pins' : pins
 }
 @main.route("/profile/<string:device>/<board>", methods=['GET','POST'])
 def controllDevice(device, board):
-
     device = Device.query.filter_by(serialNum=device).one()
     if request.method == 'POST':
-        
         if request.form.get('autopilot'):
 
             print("hi there")
@@ -135,20 +150,24 @@ def controllDevice(device, board):
             print(moistureVal)
             
             if(moistureVal.value < plant.moisture_value):
-                mqttc.publish(pins[13]['profile/<device.serialNum>/esp8266/13'], "1")
+                topicPump = "profile/" + device.serialNum + "/esp8266/13"
+                mqttc.publish(topicPump, "1")
                 pins[13]['state'] = 'True'
 
             lightVal = LightSensorValue.query.filter_by(device_id=device.id).first()
 
             if(lightVal.value < plant.light_value):
-                mqttc.publish(pins[12]['profile/<device.serialNum>/esp8266/12'], "1")
+                topicLED = "profile/" + device.serialNum + "/esp8266/12"
+                mqttc.publish(topicLED, "1")
                 pins[12]['state'] = 'True'
             
         else:
             device.autopilot = False
-            mqttc.publish(pins[13]['topic'], "0")
+            topicPump = "profile/" + device.serialNum + "/esp8266/13"
+            mqttc.publish(topicPump, "0")
             pins[13]['state'] = 'False'
-            mqttc.publish(pins[12]['topic'], "0")
+            topicLED = "profile/" + device.serialNum + "/esp8266/12"
+            mqttc.publish(topicLED, "0")
             pins[12]['state'] = 'False'
 
         print(device.autopilot)
@@ -157,7 +176,7 @@ def controllDevice(device, board):
 
 
 @main.route("/profile/<string:device>/<board>/<changePin>/<action>")
-def action(board, device, changePin, action):
+def manual(board, device, changePin, action):
     changePin = int(changePin)
     devicePin = pins[changePin]['name']
 
@@ -166,13 +185,14 @@ def action(board, device, changePin, action):
     print(plantType)
 
     plant = Plant.query.filter_by(name=plantType).first()
+    topic = "profile/" + device.serialNum + "/esp8266/" + str(changePin)
 
     if action == "1" and board == 'esp8266':
-        mqttc.publish(pins[changePin]['topic'], "1")
+        mqttc.publish(topic, "1")
         pins[changePin]['state'] = 'True'
 
     if action == "0" and board == 'esp8266':
-        mqttc.publish(pins[changePin]['topic'], "0")
+        mqttc.publish(topic, "0")
         pins[changePin]['state'] = 'False'
 
     return render_template('device.html',device = device, async_mode=socketio.async_mode , **templateData)
