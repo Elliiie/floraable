@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>D:\folder 1\school\floraable\floraable.sch</source>
+    <date>25/02/2020 08:04:23</date>
+    <tool>Eeschema (5.1.5)-3</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>floraable.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="D1">
+      <value>D1</value>
+      <footprint>Diode_THT:D_DO-41_SOD81_P7.62mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="D" description="Diode"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E3515ED</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>15k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E350215</tstamp>
+    </comp>
+    <comp ref="R7">
+      <value>150R</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E35020B</tstamp>
+    </comp>
+    <comp ref="Q1">
+      <value>IRL1404Z</value>
+      <footprint>Package_TO_SOT_THT:TO-220-3_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E406AA8</tstamp>
+    </comp>
+    <comp ref="U3">
+      <value>NodeMCU</value>
+      <footprint>floraable:newNodeMCU</footprint>
+      <datasheet>Espressif Systems</datasheet>
+      <libsource lib="ESP32-DEVKITC-32D" part="NodeMCU" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E363214</tstamp>
+    </comp>
+    <comp ref="J1">
+      <value>USB_B</value>
+      <footprint>Connector_USB:USB_B_OST_USB-B1HSxx_Horizontal</footprint>
+      <datasheet> ~</datasheet>
+      <libsource lib="Connector" part="USB_B" description="USB Type B connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E65D1DF</tstamp>
+    </comp>
+    <comp ref="J4">
+      <value>LED strip</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x03" description="Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E44DAC9</tstamp>
+    </comp>
+    <comp ref="R8">
+      <value>15k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E3353D3</tstamp>
+    </comp>
+    <comp ref="R9">
+      <value>150R</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E333EAA</tstamp>
+    </comp>
+    <comp ref="Q2">
+      <value>IRL1404Z</value>
+      <footprint>Package_TO_SOT_THT:TO-220-3_Vertical</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="Q_NMOS_GDS" description="N-MOSFET transistor, gate/drain/source"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E3EDD8D</tstamp>
+    </comp>
+    <comp ref="U4">
+      <value>DHT22</value>
+      <footprint>TEM-HUM-AM2302_4P-25.0X15.0MM_:SNR4-2.54-25.0X15.0X7.0MM</footprint>
+      <datasheet>None</datasheet>
+      <fields>
+        <field name="Field4">AM2302</field>
+        <field name="Field5">AM2302 Humidity, Temperature Sensor Grove Platform Evaluation Expansion Board</field>
+        <field name="Field6">Unavailable</field>
+        <field name="Field7">Housed Sensor Seeed Technology</field>
+        <field name="Field8">Seeed Technology</field>
+      </fields>
+      <libsource lib="TEM-HUM-AM2302_4P-25.0X15.0MM_" part="TEM-HUM-AM2302(4P-25.0X15.0MM)" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E4AD666</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>100n</value>
+      <footprint>Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E4AD65A</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>4.7k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E4AD63D</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>1u</value>
+      <footprint>Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E3C0DBF</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>1u</value>
+      <footprint>Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E3BE449</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>4.7k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E60AE14</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>4.7k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E60CC09</tstamp>
+    </comp>
+    <comp ref="J3">
+      <value>water pump</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E410F95</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>100n</value>
+      <footprint>Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E365274</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>10k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E5BE0E4</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>22k</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="R" description="Resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E5BE0DE</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>soil moisture sensor</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Horizontal</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description="Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E5BE0CC</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>BH1750_module</value>
+      <footprint>floraable:BH1750_module</footprint>
+      <datasheet>http://www.ti.com/lit/ds/symlink/ina226.pdf</datasheet>
+      <libsource lib="Analog_ADC" part="BH1750_module" description="High-Side or Low-Side Measurement, Bi-Directional Current and Power Monitor (0-36V) with I2C Compatible Interface, VSSOP-10"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E46BF4D</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>MCP1702-3302E/TO</value>
+      <footprint>Package_TO_SOT_THT:TO-92_Inline</footprint>
+      <datasheet>http://ww1.microchip.com/downloads/en/DeviceDoc/20001826D.pdf</datasheet>
+      <libsource lib="Regulator_Linear" part="MCP1700-3302E_TO92" description="250mA Low Quiscent Current LDO, 3.3V output, TO-92"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E4C43CC</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>100u</value>
+      <footprint>Capacitor_THT:CP_Radial_D5.0mm_P2.00mm</footprint>
+      <datasheet>~</datasheet>
+      <libsource lib="Device" part="CP" description="Polarized capacitor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5E4E145E</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Analog_ADC" part="BH1750_module">
+      <aliases>
+        <alias>INA233_copy</alias>
+      </aliases>
+      <description>High-Side or Low-Side Measurement, Bi-Directional Current and Power Monitor (0-36V) with I2C Compatible Interface, VSSOP-10</description>
+      <docs>http://www.ti.com/lit/ds/symlink/ina226.pdf</docs>
+      <footprints>
+        <fp>VSSOP*3x3mm*P0.5mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">BH1750_module</field>
+      </fields>
+      <pins>
+        <pin num="1" name="ADDR" type="input"/>
+        <pin num="2" name="SDA" type="input"/>
+        <pin num="3" name="SCL" type="input"/>
+        <pin num="4" name="GND" type="input"/>
+        <pin num="5" name="VCC" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="USB_B">
+      <description>USB Type B connector</description>
+      <docs> ~</docs>
+      <footprints>
+        <fp>USB*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">USB_B</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VBUS" type="power_out"/>
+        <pin num="2" name="D-" type="passive"/>
+        <pin num="3" name="D+" type="passive"/>
+        <pin num="4" name="GND" type="power_out"/>
+        <pin num="5" name="Shield" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x02">
+      <description>Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x03">
+      <description>Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="CP">
+      <description>Polarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>CP_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">CP</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="D">
+      <description>Diode</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>TO-???*</fp>
+        <fp>*_Diode_*</fp>
+        <fp>*SingleDiode*</fp>
+        <fp>D_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">D</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Q_NMOS_GDS">
+      <description>N-MOSFET transistor, gate/drain/source</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">Q_NMOS_GDS</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="D" type="passive"/>
+        <pin num="3" name="S" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="ESP32-DEVKITC-32D" part="NodeMCU">
+      <docs>Espressif Systems</docs>
+      <fields>
+        <field name="Reference">U1</field>
+        <field name="Value">NodeMCU</field>
+      </fields>
+      <pins>
+        <pin num="3V3@0" name="3V3" type="power_in"/>
+        <pin num="3V3@1" name="3V3" type="power_in"/>
+        <pin num="3V3@2" name="3V3" type="power_in"/>
+        <pin num="AD0" name="AD0" type="input"/>
+        <pin num="CLK" name="CLK" type="BiDi"/>
+        <pin num="CMD" name="CMD" type="BiDi"/>
+        <pin num="D0" name="D0" type="input"/>
+        <pin num="D1" name="D1" type="input"/>
+        <pin num="D2" name="D2" type="input"/>
+        <pin num="D3" name="D3" type="input"/>
+        <pin num="D4" name="D4" type="input"/>
+        <pin num="D5" name="D5" type="input"/>
+        <pin num="D6" name="D6" type="input"/>
+        <pin num="D7" name="D7" type="input"/>
+        <pin num="D8" name="D8" type="input"/>
+        <pin num="EN" name="EN" type="BiDi"/>
+        <pin num="GND@0" name="GND" type="power_in"/>
+        <pin num="GND@1" name="GND" type="power_in"/>
+        <pin num="GND@2" name="GND" type="power_in"/>
+        <pin num="GND@3" name="GND" type="power_in"/>
+        <pin num="RST" name="RST" type="BiDi"/>
+        <pin num="RSV@0" name="RSV" type="BiDi"/>
+        <pin num="RSV@1" name="RSV" type="BiDi"/>
+        <pin num="RX" name="RX" type="BiDi"/>
+        <pin num="SD0" name="SD0" type="BiDi"/>
+        <pin num="SD1" name="SD1" type="BiDi"/>
+        <pin num="SD2" name="SD2" type="BiDi"/>
+        <pin num="SD3" name="SD3" type="BiDi"/>
+        <pin num="TX" name="TX" type="BiDi"/>
+        <pin num="VIN" name="VIN" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Regulator_Linear" part="LM79L05_TO92">
+      <aliases>
+        <alias>LM79L12_TO92</alias>
+        <alias>LM79L15_TO92</alias>
+        <alias>L79L05_TO92</alias>
+        <alias>L79L08_TO92</alias>
+        <alias>L79L12_TO92</alias>
+        <alias>L79L15_TO92</alias>
+        <alias>MCP1700-3002E_TO92</alias>
+        <alias>MCP1700-1202E_TO92</alias>
+        <alias>MCP1700-1802E_TO92</alias>
+        <alias>MCP1700-2502E_TO92</alias>
+        <alias>MCP1700-2802E_TO92</alias>
+        <alias>MCP1700-3302E_TO92</alias>
+        <alias>MCP1700-5002E_TO92</alias>
+      </aliases>
+      <description>3-Terminal Negative Regulator, -5V, TO-92</description>
+      <docs>http://www.ti.com/lit/ds/symlink/lm79l.pdf</docs>
+      <footprints>
+        <fp>TO?92*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">LM79L05_TO92</field>
+        <field name="Footprint">Package_TO_SOT_THT:TO-92_Inline</field>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="power_in"/>
+        <pin num="2" name="VI" type="power_in"/>
+        <pin num="3" name="VO" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="TEM-HUM-AM2302_4P-25.0X15.0MM_" part="TEM-HUM-AM2302(4P-25.0X15.0MM)">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">TEM-HUM-AM2302(4P-25.0X15.0MM)</field>
+        <field name="Footprint">SNR4-2.54-25.0X15.0X7.0MM</field>
+        <field name="Datasheet">None</field>
+        <field name="Field4">AM2302</field>
+        <field name="Field5">AM2302 Humidity, Temperature Sensor Grove Platform Evaluation Expansion Board</field>
+        <field name="Field6">Unavailable</field>
+        <field name="Field7">Housed Sensor Seeed Technology</field>
+        <field name="Field8">Seeed Technology</field>
+      </fields>
+      <pins>
+        <pin num="P$1" name="VDD" type="output"/>
+        <pin num="P$2" name="DATA" type="BiDi"/>
+        <pin num="P$3" name="NC" type="NotConnected"/>
+        <pin num="P$4" name="GND" type="output"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Analog_ADC">
+      <uri>D:\folder 0\download\KiCad\share\kicad\library/Analog_ADC.lib</uri>
+    </library>
+    <library logical="Connector">
+      <uri>D:\folder 0\download\KiCad\share\kicad\library/Connector.lib</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>D:\folder 0\download\KiCad\share\kicad\library/Connector_Generic.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>D:\folder 0\download\KiCad\share\kicad\library/Device.lib</uri>
+    </library>
+    <library logical="ESP32-DEVKITC-32D">
+      <uri>D:/folder 0/download/KiCad/lib/ESP32-DEVKITC-32D.lib</uri>
+    </library>
+    <library logical="Regulator_Linear">
+      <uri>D:/folder 0/download/KiCad/lib/Regulator_Linear.lib</uri>
+    </library>
+    <library logical="TEM-HUM-AM2302_4P-25.0X15.0MM_">
+      <uri>D:/folder 0/download/KiCad/lib/TEM-HUM-AM2302_4P-25.0X15.0MM_.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+5V">
+      <node ref="J3" pin="1"/>
+      <node ref="R5" pin="1"/>
+      <node ref="J4" pin="3"/>
+      <node ref="U4" pin="P$1"/>
+      <node ref="C4" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="C2" pin="1"/>
+      <node ref="J1" pin="1"/>
+      <node ref="U1" pin="2"/>
+      <node ref="U3" pin="VIN"/>
+      <node ref="D1" pin="1"/>
+    </net>
+    <net code="2" name="LEDSTRIP">
+      <node ref="U3" pin="D6"/>
+      <node ref="R9" pin="2"/>
+      <node ref="R8" pin="1"/>
+    </net>
+    <net code="3" name="GND">
+      <node ref="U2" pin="4"/>
+      <node ref="J1" pin="5"/>
+      <node ref="U3" pin="GND@2"/>
+      <node ref="U3" pin="GND@1"/>
+      <node ref="U3" pin="GND@0"/>
+      <node ref="J1" pin="4"/>
+      <node ref="C1" pin="2"/>
+      <node ref="C3" pin="2"/>
+      <node ref="R2" pin="2"/>
+      <node ref="Q1" pin="3"/>
+      <node ref="U3" pin="GND@3"/>
+      <node ref="Q2" pin="3"/>
+      <node ref="R8" pin="2"/>
+      <node ref="R6" pin="2"/>
+      <node ref="C4" pin="2"/>
+      <node ref="U4" pin="P$4"/>
+      <node ref="U1" pin="1"/>
+      <node ref="C2" pin="2"/>
+      <node ref="C5" pin="2"/>
+    </net>
+    <net code="4" name="Net-(D1-Pad2)">
+      <node ref="D1" pin="2"/>
+      <node ref="J3" pin="2"/>
+      <node ref="Q1" pin="2"/>
+    </net>
+    <net code="5" name="Net-(U4-PadP$3)">
+      <node ref="U4" pin="P$3"/>
+    </net>
+    <net code="6" name="TEMPERATURE">
+      <node ref="R5" pin="2"/>
+      <node ref="U4" pin="P$2"/>
+      <node ref="U3" pin="D8"/>
+    </net>
+    <net code="7" name="+3V3">
+      <node ref="U2" pin="5"/>
+      <node ref="R4" pin="1"/>
+      <node ref="R1" pin="1"/>
+      <node ref="R3" pin="1"/>
+      <node ref="C3" pin="1"/>
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="8" name="Net-(J2-Pad2)">
+      <node ref="J2" pin="2"/>
+      <node ref="R1" pin="2"/>
+    </net>
+    <net code="9" name="SOIL">
+      <node ref="R2" pin="1"/>
+      <node ref="J2" pin="1"/>
+      <node ref="U3" pin="RSV@0"/>
+      <node ref="C1" pin="1"/>
+    </net>
+    <net code="10" name="SCL">
+      <node ref="U3" pin="D2"/>
+      <node ref="R3" pin="2"/>
+      <node ref="U2" pin="3"/>
+    </net>
+    <net code="11" name="SDA">
+      <node ref="U2" pin="2"/>
+      <node ref="U3" pin="D1"/>
+      <node ref="R4" pin="2"/>
+    </net>
+    <net code="12" name="Net-(U2-Pad1)">
+      <node ref="U2" pin="1"/>
+    </net>
+    <net code="13" name="Net-(U3-PadD4)">
+      <node ref="U3" pin="D4"/>
+    </net>
+    <net code="14" name="Net-(U3-PadEN)">
+      <node ref="U3" pin="EN"/>
+    </net>
+    <net code="15" name="Net-(U3-PadD5)">
+      <node ref="U3" pin="D5"/>
+    </net>
+    <net code="16" name="Net-(U3-PadD3)">
+      <node ref="U3" pin="D3"/>
+    </net>
+    <net code="17" name="Net-(U3-PadD0)">
+      <node ref="U3" pin="D0"/>
+    </net>
+    <net code="18" name="Net-(U3-PadCMD)">
+      <node ref="U3" pin="CMD"/>
+    </net>
+    <net code="19" name="Net-(U3-PadCLK)">
+      <node ref="U3" pin="CLK"/>
+    </net>
+    <net code="20" name="Net-(U3-PadAD0)">
+      <node ref="U3" pin="AD0"/>
+    </net>
+    <net code="21" name="Net-(U3-Pad3V3@2)">
+      <node ref="U3" pin="3V3@2"/>
+    </net>
+    <net code="22" name="Net-(U3-PadSD3)">
+      <node ref="U3" pin="SD3"/>
+    </net>
+    <net code="23" name="Net-(U3-PadTX)">
+      <node ref="U3" pin="TX"/>
+    </net>
+    <net code="24" name="Net-(U3-Pad3V3@1)">
+      <node ref="U3" pin="3V3@1"/>
+    </net>
+    <net code="25" name="Net-(U3-PadSD2)">
+      <node ref="U3" pin="SD2"/>
+    </net>
+    <net code="26" name="Net-(U3-PadSD1)">
+      <node ref="U3" pin="SD1"/>
+    </net>
+    <net code="27" name="Net-(U3-PadSD0)">
+      <node ref="U3" pin="SD0"/>
+    </net>
+    <net code="28" name="Net-(U3-PadRX)">
+      <node ref="U3" pin="RX"/>
+    </net>
+    <net code="29" name="Net-(U3-PadRSV@1)">
+      <node ref="U3" pin="RSV@1"/>
+    </net>
+    <net code="30" name="Net-(U3-PadRST)">
+      <node ref="U3" pin="RST"/>
+    </net>
+    <net code="31" name="PUMP">
+      <node ref="R7" pin="2"/>
+      <node ref="R6" pin="1"/>
+      <node ref="U3" pin="D7"/>
+    </net>
+    <net code="32" name="Net-(Q1-Pad1)">
+      <node ref="R7" pin="1"/>
+      <node ref="Q1" pin="1"/>
+    </net>
+    <net code="33" name="Net-(U3-Pad3V3@0)">
+      <node ref="U3" pin="3V3@0"/>
+    </net>
+    <net code="34" name="Net-(J4-Pad2)">
+      <node ref="J4" pin="2"/>
+    </net>
+    <net code="35" name="Net-(J4-Pad1)">
+      <node ref="Q2" pin="2"/>
+      <node ref="J4" pin="1"/>
+    </net>
+    <net code="36" name="Net-(Q2-Pad1)">
+      <node ref="R9" pin="1"/>
+      <node ref="Q2" pin="1"/>
+    </net>
+    <net code="37" name="Net-(J1-Pad3)">
+      <node ref="J1" pin="3"/>
+    </net>
+    <net code="38" name="Net-(J1-Pad2)">
+      <node ref="J1" pin="2"/>
+    </net>
+  </nets>
+</export>
